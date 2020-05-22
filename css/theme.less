@@ -1,0 +1,155 @@
+@background: #1a2444;
+@main-color: #b8b8b8;
+@blue-color: #0f43a4;
+@title-color: #ffffff;
+@card-background: #f9f9f9;
+
+@font-family: 'Poppins', sans-serif;
+
+@font-size: 16px;
+@font-title: 12px;
+@font-card: 13px;
+@font-number: 24px;
+
+
+@iterations: 5;
+@angle : 1.2566370614359172;
+@radius: 150;
+
+.mixin-loop (@i) when (@i > 0) {
+  #game-board button:nth-child(@{i}) {
+    left : @radius * cos(@angle * (@i - 1))  ;
+    background: red;
+    top : @radius * sin(@angle * (@i - 1)) ;
+  }
+  .mixin-loop(@i - 1);
+}
+
+.mixin-loop(@iterations);
+
+body{
+  font-family: @font-family;
+  background-image: url(./bg-pentagon.png);
+  background-position-y: 60%;
+  background-size: 306px;
+  background-repeat: no-repeat;
+  background-color: #1f3656;
+  background-position-x: 51%;
+
+  #wrapper{
+    width:80%;
+    margin: 0 auto;
+    #score{
+      border: 2px solid #596883;
+      border-radius: 6px;
+      padding: 1%;
+      &:after{
+        content: " ";
+        display: block;
+        clear: both;
+      }
+      p{
+        margin: 0 0 5px 0;
+        color: @title-color;
+        font-size: @font-title;
+        text-transform: uppercase;
+        width:24%;
+        float:left;
+      }
+      .card{
+        text-transform: uppercase;
+        border-radius: 5px;
+        font-size: @font-card;
+        float:left;
+        width: 22%;
+        margin:0.5%;
+        background: @card-background;
+        text-align: center;
+        color: @blue-color;
+        padding:1%;
+        -webkit-box-shadow: -1px 6px 8px -6px rgba(0,0,0,0.75);
+        -moz-box-shadow: -1px 6px 8px -6px rgba(0,0,0,0.75);
+        box-shadow: -1px 6px 8px -6px rgba(0,0,0,0.75);
+
+        .number{
+          font-size: @font-number;
+          color: #565656;
+          padding: 1%;
+          font-weight: bold ;
+        }
+      }
+    }
+    #game-board{
+      position: absolute;
+      top: 48%;
+      left: 46.3%;
+      .button{
+        border-radius: 50%;
+        border:none;
+        padding: 14px 15px;
+        position: absolute;
+        cursor : pointer;
+        -webkit-box-shadow: -1px 6px 8px -6px rgba(0,0,0,0.75),   inset -2px -11px 0px -6px rgba(0,0,0,0.2);
+        -moz-box-shadow: -1px 6px 8px -6px rgba(0,0,0,0.75),  inset -2px -11px 0px -6px rgba(0,0,0,0.2);
+        box-shadow: -1px 6px 8px -6px rgba(0,0,0,0.75),  inset -2px -11px 0px -6px rgba(0,0,0,0.2);
+
+        outline:none;
+        &[data-type="paper"]{
+          background: #4765f7;
+          span{
+            background-image: url("./icon-paper.svg");
+          }
+        }
+        &[data-type="rock"]{
+          background:#dc324f;
+          span{
+            background-image: url("./icon-rock.svg");
+          }
+        }
+        &[data-type="scissors"]{
+          background:#eca20f;
+          span{
+            background-image: url("./icon-scissors.svg");
+          }
+        }
+        &[data-type="lizzard"]{
+          background: #8b57e2;
+          span{
+            background-image: url("./icon-lizard.svg");
+          }
+        }
+        &[data-type="spock"]{
+          background: #42b7cb;
+          span{
+            background-image: url("./icon-spock.svg");
+          }
+        }
+
+        span{
+          -webkit-box-shadow: inset -2px 13px 0px -8px rgba(0,0,0,0.26);
+          -moz-box-shadow: inset -2px 13px 0px -8px rgba(0,0,0,0.26);
+          box-shadow: inset -2px 13px 0px -8px rgba(0,0,0,0.26);
+          display: block;
+          border-radius: 50%;
+          background-color: #e5e5e5;
+          background-repeat: no-repeat;
+          text-indent: -5000px;
+          background-position: center;
+          background-size: 60%;
+          width: 80px;
+          height: 80px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  body {
+    #wrapper{
+      #game-board{
+        left:38%;
+      }
+    }
+  }
+}

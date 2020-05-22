@@ -11,10 +11,13 @@
   const game_logic = {
     'paper': ['rock','spock'],
     'rock' : ['scissors','lizzard'],
-    'scissors': ['paper','lizzard'],
     'lizzard' : ['spock','paper'],
     'spock': ['scissors','rock'],
+    'scissors': ['paper','lizzard'],
+
   };
+
+  let game_options = Object.keys(game_logic);
 
   const whoWon = function( player1, player2){
     if(player1 === player2){
@@ -24,9 +27,9 @@
   }
 
   const computerOption = function(){
-    let game_options = Object.keys(game_logic);
     let computer_selection = game_options[Math.floor(Math.random() * game_options.length)];
-    computer.innerHTML = computer_selection;
+    computer.innerHTML = `computer: ${computer_selection}`;
+
     return computer_selection;
   }
 
@@ -37,22 +40,24 @@
 
   const selectOption = function(event){
     let user_selection = this.dataset.type;
-    user.innerHTML = user_selection;
+    user.innerHTML = `user: ${user_selection}`;
     let computer_selection = computerOption();
     scoreAccumulate ( whoWon(user_selection, computer_selection) );
   };
 
+  const createButton = function(index){
+    let button = document.createElement("button");
+    button.classList.add("button");
+    button.innerHTML = `<span>${game_options[index]}</span>`;
+    button.setAttribute("data-type", game_options[index]);
+    button.addEventListener("click", selectOption);
+    gameboard.appendChild(button);
+  }
+
   const initGame = function(){
     console.log("Starting game");
-    let game_options = Object.keys(game_logic);
-
     for(let index = 0; index < game_options.length; index ++){
-      let button = document.createElement("button");
-      button.classList.add("button");
-      button.textContent = game_options[index];
-      button.setAttribute("data-type", game_options[index]);
-      button.addEventListener("click", selectOption);
-      gameboard.appendChild(button);
+      createButton(index);
     }
   }
 
